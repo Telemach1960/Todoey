@@ -39,7 +39,7 @@
                             <outlet property="delegate" destination="biW-Ba-hTR" id="KVS-EP-OLP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Items" id="mAd-P5-TWn">
+                    <navigationItem key="navigationItem" title="Items" largeTitleDisplayMode="always" id="mAd-P5-TWn">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="sKj-N6-ixQ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -77,7 +77,7 @@
         <!--Todoey-->
         <scene sceneID="nbT-6L-LLg">
             <objects>
-                <tableViewController id="WNY-DF-VcW" customClass="CategoryTableViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="WNY-DF-VcW" customClass="CategoryViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="yNQ-vA-Vdu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -101,7 +101,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OGk-vR-iFd">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="addButtonPressed:" destination="WNY-DF-VcW" id="VI1-p8-uwl"/>
+                                <action selector="barButtonPressed:" destination="WNY-DF-VcW" id="lS7-dI-col"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
