@@ -24,7 +24,7 @@
 		1987CF04216910EC00A7A2F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1987CF06216910F100A7A2F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1987CF09216910F200A7A2F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1987CF0B216910F200A7A2F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = ../../Info.plist; sourceTree = "<group>"; };
+		1987CF0B216910F200A7A2F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 		19BD1D5B21723CEC00D8068C /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		A5C394742178EAA70096D95F /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		A5C394762178ECE10096D95F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -61,6 +61,7 @@
 		1987CEFE216910EC00A7A2F4 /* Todoey */ = {
 			isa = PBXGroup;
 			children = (
+				1987CF0B216910F200A7A2F4 /* Info.plist */,
 				1987CEFF216910EC00A7A2F4 /* AppDelegate.swift */,
 				19935E47216B8D510040F712 /* View */,
 				19935E46216B8D460040F712 /* Controller */,
@@ -99,7 +100,6 @@
 		19935E48216B8DFB0040F712 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1987CF0B216910F200A7A2F4 /* Info.plist */,
 				1987CF06216910F100A7A2F4 /* Assets.xcassets */,
 			);
 			path = "Supporting Files";
