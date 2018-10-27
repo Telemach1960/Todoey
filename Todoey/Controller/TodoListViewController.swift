@@ -8,12 +8,15 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
-class TodoListViewController: UITableViewController {
+
+class TodoListViewController: SwipeTableViewController {
     
     var todoItems: Results<Item>?
     let realm = try! Realm()
     
+    @IBOutlet weak var searchBar: UISearchBar!
     //let searchBar : UISearchBar
     
     var selectedCategory : Category? {
@@ -24,7 +27,7 @@ class TodoListViewController: UITableViewController {
     
  //   let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     
-     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
   //  let defaults = UserDefaults.standard
 
@@ -33,10 +36,12 @@ class TodoListViewController: UITableViewController {
         
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        
+        tableView.separatorStyle = .none
      //   searchBar.delegate = self
         
+       
         
+      
         
         //print(dataFilePath)
         
@@ -63,6 +68,30 @@ class TodoListViewController: UITableViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let colourHex = selectedCategory?.colour {
+            
+            title = selectedCategory!.name
+            
+            guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist.")}
+            
+            if let navBarColour = UIColor(hexString: colourHex) {
+                navBar.barTintColor = navBarColour
+                
+                navBar.tintColor = ContrastColorOf(navBarColour, returnFlat: true)
+                
+                navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarColour, returnFlat: true)]
+                
+                
+                searchBar.barTintColor = navBarColour
+            }
+            
+            
+        }
+        
+    }
+    
     //MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,13 +100,26 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        print("cellForRowsAtIndexPath Called!")
+    //    print("cellForRowsAtIndexPath Called!")
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let  item = todoItems?[indexPath.row] {
            
             cell.textLabel?.text = item.title
+            
+            
+            if let colour = UIColor(hexString: selectedCategory!.colour)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)) {
+                cell.backgroundColor = colour
+                //currently on row #5.
+                // there's a total of 10 items in todoItems
+                
+                cell.textLabel?.textColor = ContrastColorOf(colour, returnFlat: true)
+                
+            }
+            
+            
+            
             
             
             //Ternary operator ==>
@@ -197,57 +239,51 @@ class TodoListViewController: UITableViewController {
     
     //MARK: - Model Manipulation Methods
     
-    func saveItems() {
-        
-        // let encoder = PropertyListEncoder()
-        
-        do {
-            //            let data = try encoder.encode(itemArray)
-            //            try data.write(to: dataFilePath!)
-            try context.save()
-            
-        } catch {
-            print("Error saving context, \(error)")
-        }
-        
-        
-        
-        
-        self.tableView.reloadData()
+//    func saveItems() {
+//
+//        // let encoder = PropertyListEncoder()
+//
+//        do {
+//            //            let data = try encoder.encode(itemArray)
+//            //            try data.write(to: dataFilePath!)
+//          // try context.save()
+//
+//        } catch {
+//            print("Error saving context, \(error)")
+//        }
+    
         
         
-        
-        
-    }
+//        
+//        self.tableView.reloadData()
+//        
+//        
+//        
+//        
+//    }
     
     func loadItems() {
        // let request : NSFetchRequest<Item> = Item.fetchRequest()
         
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
 
-//        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-//
-//        if let addtionalPredicate = predicate {
-//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, addtionalPredicate])
-//        } else {
-//            request.predicate = categoryPredicate
-//        }
-//
-////        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate])
-////
-////        request.predicate = compoundPredicate
-//
-//
-//        do {
-//        itemArray = try context.fetch(request)
-//        } catch {
-//            print("Error fetching data from context \(error)")
-//        }
+
 
         tableView.reloadData()
     }
     
-   
+    override func updateModel(at indexPath: IndexPath) {
+        if let item = todoItems?[indexPath.row] {
+            do {
+            try realm.write {
+                realm.delete(item)
+                }
+            } catch {
+                    print("Fehlermeldung: \(error)")
+                }
+        }
+    }
+    
     
     
 
