@@ -70,28 +70,48 @@ class TodoListViewController: SwipeTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        if let colourHex = selectedCategory?.colour {
-            
-            title = selectedCategory!.name
-            
-            guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist.")}
-            
-            if let navBarColour = UIColor(hexString: colourHex) {
-                navBar.barTintColor = navBarColour
-                
-                navBar.tintColor = ContrastColorOf(navBarColour, returnFlat: true)
-                
-                navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarColour, returnFlat: true)]
-                
-                
-                searchBar.barTintColor = navBarColour
-            }
-            
-            
-        }
+        title = selectedCategory?.name
+        
+        
+        
+        guard let colourHex = selectedCategory?.colour  else { fatalError() }
+        
+        //title = selectedCategory?.name
+        
+        updateNavBar(withHexCode: colourHex)
+        
+        
+        
+       
+        
+        
+        
+        
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+       
+        updateNavBar(withHexCode: "3A5DF5")
+        
+    }
+    
+    // MARK: - Nav Bar Setup Methods
+    
+    func updateNavBar(withHexCode colourHexCode: String) {
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist.")
+        }
+        guard let navBarColour = UIColor(hexString: colourHexCode) else  { fatalError() }
+        navBar.barTintColor = navBarColour
+        
+        navBar.tintColor = ContrastColorOf(navBarColour, returnFlat: true)
+        
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarColour, returnFlat: true)]
+        
+        
+        searchBar.barTintColor = navBarColour
+        
+    }
     //MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
